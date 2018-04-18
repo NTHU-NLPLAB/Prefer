@@ -1,0 +1,151 @@
+
+
+	{% autoescape off %}
+
+		
+		<div id="tab3_ctn"  class="tab_ctn">
+			<div class="sidebar">
+			<div style="" id="top_bar"> 
+				{% if msg %}
+					<b style="color:#333">{{ msg }}</b>
+				{% else %}
+					{{ qphrase }} 
+				{% endif %}
+				</div>
+				<ul class="menu">
+					{% for pat, detail_lst in pattern_lst %}
+						<li><a href="#" value="pat_ex_{{ forloop.counter }}">  <b style="font-size:large">  {{ pat.0 }} </b>  -------- PHRASE --------<b style="font-size:large"> {{ pat.1 }}  </b>  </a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div id="example_sent3" class="exsent_container">
+				{% for pat, detail_lst in pattern_lst %}
+				<div class="exsent" id="pat_ex_{{ forloop.counter }}">
+	
+					<ul class="exaccord noaccordion">
+					{% for score, ex, pos_lst in detail_lst %}	
+						<li> <a href="#"> {{ ex }} </a> 
+							<ul class="acitem">
+								{% for  hword , ex_phrase , tword in pos_lst %}
+								<li><a href="#"> {{ hword }} <b>{{ ex_phrase }}</b> {{ tword }} </a></li>
+								{% endfor %}
+							</ul>
+						</li>
+					{% endfor %}	
+					</ul>
+					
+					
+				</div>
+				{% endfor %}
+				
+			</div>
+		</div>
+
+
+
+<script>
+$(document).ready(function() {	
+
+
+	$('.exaccord').initMenu();
+	
+
+	//Background color, mouseover and mouseout
+	var colorOver = '#31b8da';
+	var colorOut = '#CCC';
+
+	//Padding, mouseover
+	var padLeft = '20px';
+	var padRight = '20px';
+	
+	//Default Padding
+	var defpadLeft = $('.menu li a').css('paddingLeft');
+	var defpadRight = $('.menu li a').css('paddingRight');
+	
+	
+	
+	//Animate the LI on mouse over, mouse out
+	$('.menu li').click(function () {	
+		//Make LI clickable
+		window.location = $(this).find('a').attr('href');
+		
+		to_show = $(this).find('a').attr('value');
+		
+		$(".exsent").fadeOut(0)
+		$('#'+to_show).fadeIn(1000);
+		
+		
+		$('.menu li').find('a')
+		.animate( { paddingLeft: defpadLeft, paddingRight: defpadRight}, { queue:false, duration:100 } )
+		.animate( { backgroundColor: colorOut }, { queue:false, duration:200 });
+		
+		$(this).find('a')
+		.animate( { paddingLeft: padLeft, paddingRight: padRight}, { queue:false, duration:100 } )
+		.animate( { backgroundColor: colorOver }, { queue:false, duration:200 });
+		
+	}).mouseover(function (){
+		
+		//mouse over LI and look for A element for transition
+		$(this).find('a')
+		.animate( { paddingLeft: padLeft, paddingRight: padRight}, { queue:false, duration:100 } )
+		.animate( { backgroundColor: "5px" }, { queue:false, duration:200 });
+
+	}).mouseout(function () {
+	
+		//mouse oout LI and look for A element and discard the mouse over transition
+		$(this).find('a')
+		.animate( { paddingLeft: defpadLeft, paddingRight: defpadRight}, { queue:false, duration:100 } );
+	});	
+	
+	
+	// tooltip
+	$('span.wordlist').cluetip({
+		cluezIndex:500,
+		arrows: false,
+		dropShadow: false,
+		hoverIntent: false,
+		sticky: false,
+		mouseOutClose: true,
+		fx: {             
+            open:       'fadeIn', // can be 'show' or 'slideDown' or 'fadeIn'
+        	openSpeed:  '300'
+    	},
+		tracking: true,
+
+	});
+
+	$('a.expl_sent').cluetip({
+		cluezIndex:500,
+ 
+		width: 650,
+		arrows: false,
+		dropShadow: false,
+		hoverIntent: false,
+		sticky: false,
+		mouseOutClose: true,
+				fx: {             
+            open:       'fadeIn', // can be 'show' or 'slideDown' or 'fadeIn'
+        	openSpeed:  '300'
+    	},
+    	tracking: true,
+
+	});
+	
+	$('span.translate').cluetip({
+ 
+		cluezIndex:500,
+		arrows: false,
+		dropShadow: false,
+		hoverIntent: false,
+		sticky: false,
+		mouseOutClose: true,
+		fx: {             
+            open:       'fadeIn', // can be 'show' or 'slideDown' or 'fadeIn'
+        	openSpeed:  '300'
+    	},
+    	tracking: true,
+
+	});
+});
+</script>
+{% endautoescape %}

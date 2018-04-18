@@ -18,4 +18,16 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    (r'^PREFER/example.html', 'PREFER.PARAPHRASE.views.get_example' ),
+    (r'^PREFER/index2.html', 'PREFER.PARAPHRASE.views.get_paraphrase2' ),
+    (r'^PREFER/translate.html', 'PREFER.PARAPHRASE.views.get_translation' ),
+    (r'^PREFER/wordlist.html', 'PREFER.PARAPHRASE.views.get_wordlist' ),
+	(r'^PREFER/similar.html', 'PREFER.PARAPHRASE.views.get_similar_paraphrase' ),
+	(r'^PREFER/extended.html', 'PREFER.PARAPHRASE.views.get_extended_paraphrase' ),
+	(r'^PREFER/pattern.html', 'PREFER.PARAPHRASE.views.get_pattern_paraphrase' ),
+	(r'^PREFER/preview.html', 'PREFER.PARAPHRASE.views.preview' ),
+	(r'^PREFER/login.html', 'PREFER.PARAPHRASE.views.login' ),
+	(r'^PREFER/validate.html', 'PREFER.PARAPHRASE.views.validate_html' ),
+	(r'^PREFER/', 'PREFER.PARAPHRASE.views.get_paraphrase' ),
 ]

@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<title>PREFER</title>
+<!--CSS-->
+
+<!--<link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8"/>-->
+<!-- <link rel="stylesheet" href="css/animated-menu.css"/>-->
+<link rel="stylesheet" type="text/css" href="css/accord.css" />
+<link rel="stylesheet" type="text/css" href="css/jquery.cluetip.css" />
+<link rel="stylesheet" type="text/css" href="css/prefer.css" />
+<!--Javascript-->
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="js/jquery.color.js"></script>
+<script type="text/javascript" src="js/preferbar.js"></script>
+<script src="js/animated-menu.js" type="text/javascript"></script>
+<!--<script src="js/kandytabs.pack.js" type="text/javascript"></script>-->
+<script src="js/accord.js" type="text/javascript"></script>
+<!--<script src="js/jquery.tools.min.js" type="text/javascript"></script>-->
+<script src="js/jquery.cluetip.js" type="text/javascript"></script>
+<!--Inline-->
+<script type="text/javascript">
+</script>
+<style></style>
+</head>
+<body>
+
+<div id="banner"></div>
+<img id="logo" src="images/prefer.png"  />
+<div id="tab_btn_container">
+	<div id="tab1_btn" class="tab_btn"> 同義 </div>
+	<div id="tab2_btn" class="tab_btn"> 延伸 </div>
+	<div id="tab3_btn" class="tab_btn"> 句型 </div>
+	
+	<form method="GET" action="/PREFER/">
+		<input type="text" size="60" class="search" id="qphrase" name="qphrase" value="{{ qphrase }}" />
+		<input type="submit"  class="search" value="search" />
+	</form>
+	
+</div>
+<div id="container">
+	<div style="font-size:xx-large; display:block; position:fixed; top:110px; z-index:10; background:#FFF; width:960px; height:70px; line-height:70px; text-align:center; color:#FFF; background:#77ABD9; box-shadow: 3px 3px 4px #000;"> {{ qphrase }} </div>
+
+	{% autoescape off %}
+	<div id="tab_ctn_container">
+		<div id="tab1_ctn" class="tab_ctn">
+			<div class="sidebar">
+				<ul class="menu">
+					{% for phrase, ch_ph , score, ex_lst in results_lst %}
+						<li><a href="#" value="sim_ex_{{ forloop.counter }}">{{ phrase }} {{ ch_ph }} <span> / {{ score }}</span></a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div id="example_sent" class="exsent_container">
+				{% for phrase, ch_ph , score, ex_lst in results_lst %}
+				<div class="exsent" id="sim_ex_{{ forloop.counter }}">
+					{% for ex, ex_sent, ex_ch, pat_lst  in ex_lst %}
+					<h3>{{ ex }} {{ ex_ch }}</h3>
+					
+					<p>{{ ex_sent }}</p>
+					<ul class="exaccord noaccordion">
+						{% for pat, pat_items in pat_lst.items %}
+						<li> <a><span class="wordlist" title="例字" href="wordlist.html?qword={{ pat.1 }}" rel="wordlist.html?qword={{ pat.1 }}" > {{ pat.0 }} </span> {{ pat.2 }} <span class="wordlist" title="例句" href="wordlist.html?qword={{ pat.4 }}" rel="wordlist.html?qword={{ pat.4 }}" > {{ pat.3 }} </span></a>
+							<ul class="acitem">
+								{% for pat_ex in pat_items.3 %}
+								<li><a class="expl_sent" title="例句" href="example.html?qp={{ pat_ex }}" rel="example.html?qp={{ pat_ex }}" > {{ pat_ex }} <span class="translate" title="翻譯" href="translate.html?qp={{ pat_ex }}" rel="translate.html?qp={{ pat_ex }}" > 翻譯 </span></a></li>
+								{% endfor %}
+							</ul>
+						</li>
+						{% endfor %}
+					</ul>
+					{% endfor %}
+					
+				</div>
+				{% endfor %}
+				
+			</div>
+		</div>
+		<div id="tab2_ctn"  class="tab_ctn">
+			<div class="sidebar">
+				<ul class="menu">
+					{% for phrase, ch_ph , score, ex_lst in extend_results_lst %}
+						<li><a href="#" value="ext_ex_{{ forloop.counter }}">{{ phrase }} {{ ch_ph }} <span> / {{ score }}</span></a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div id="example_sent2" class="exsent_container">
+				{% for phrase, ch_ph , score, ex_lst in extend_results_lst %}
+				<div class="exsent" id="ext_ex_{{ forloop.counter }}">
+					{% for ex, ex_sent, ex_ch, pat_lst  in ex_lst %}
+					<h3>{{ ex }} {{ ex_ch }}</h3>
+					
+					<p>{{ ex_sent }}</p>
+					<ul class="exaccord noaccordion">
+						{% for pat, pat_items in pat_lst.items %}
+						<li> <a><span class="wordlist" title="例字" href="wordlist.html?qword={{ pat.1 }}" rel="wordlist.html?qword={{ pat.1 }}" > {{ pat.0 }} </span> {{ pat.2 }} <span class="wordlist" title="例句" href="wordlist.html?qword={{ pat.4 }}" rel="wordlist.html?qword={{ pat.4 }}" > {{ pat.3 }} </span></a>
+							<ul class="acitem">
+								{% for pat_ex in pat_items.3 %}
+								<li><a class="expl_sent" title="例句" href="example.html?qp={{ pat_ex }}" rel="example.html?qp={{ pat_ex }}" > {{ pat_ex }} <span class="translate" title="翻譯" href="translate.html?qp={{ pat_ex }}" rel="translate.html?qp={{ pat_ex }}" > 翻譯 </span></a></li>
+								{% endfor %}
+							</ul>
+						</li>
+						{% endfor %}
+					</ul>
+					{% endfor %}
+					
+				</div>
+				{% endfor %}
+				
+			</div>
+			
+		</div>
+		<div id="tab3_ctn"  class="tab_ctn">
+			<div class="sidebar">
+				<ul class="menu">
+					{% for pat, detail_lst in pattern_lst %}
+						<li><a href="#" value="pat_ex_{{ forloop.counter }}">  <b style="font-size:large">  {{ pat.0 }} </b>  -------- PHRASE --------<b style="font-size:large"> {{ pat.1 }}  </b>  </a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div id="example_sent3" class="exsent_container">
+				{% for pat, detail_lst in pattern_lst %}
+				<div class="exsent" id="pat_ex_{{ forloop.counter }}">
+	
+					<ul class="exaccord noaccordion">
+					{% for score, ex, pos_lst in detail_lst %}	
+						<li> <a href="#"> {{ ex }} </a> 
+							<ul class="acitem">
+								{% for  hword , ex_phrase , tword in pos_lst %}
+								<li><a href="#"> {{ hword }} <b>{{ ex_phrase }}</b> {{ tword }} </a></li>
+								{% endfor %}
+							</ul>
+						</li>
+					{% endfor %}	
+					</ul>
+					
+					
+				</div>
+				{% endfor %}
+				
+			</div>
+		</div>
+	</div>
+</div>
+{% endautoescape %}
+<div id="bottom"></div>
+</body>
+</html>

@@ -71,3 +71,7 @@ target/
 
 # staticfiles
 staticfiles/
+
+# database
+*.db
+*.db3
