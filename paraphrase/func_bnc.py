@@ -3,6 +3,7 @@
 import os
 import sqlite3
 
+from .environment import DB_DIR
 
 stopwords = set(['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now'])
 en_table = ['JA', 'IN', 'SU', 'UF', 'TE', 'EW', 'PA', 'AC', 'HE', 'HO', 'MU', 'JO', 'IZ', 'QA', 'MI', 'FA', 'ME', 'NI', 'IH', 'IR', 'UJ', 'OD', 'TO', 'AQ', 'EH', 'UH', 'DI', 'NA', 'G', 'NE', 'EC', 'VA', 'D', 'AM', 'EP', 'LU', 'TI', 'QE', 'UG', 'IP', 'DE', 'OC', 'A', 'OK', 'UW', 'KO', 'OZ', 'I', 'QI', 'SI', 'GO', 'OR', 'OY', 'ER', 'RO', 'AX', 'DO', 'RE', 'SO', 'T', 'IQ', 'UR', 'IF', 'L', 'UL', 'M', 'IM', 'V', 'OT', 'AN', 'AT', 'UC', 'IW', 'JI', 'EY', 'EN', 'AD', 'EF', 'UX', 'DU', 'JE', 'B', 'VU', 'SE', 'KE', 'OH', 'J', 'LE', 'UV', 'O', 'IT', 'GU', 'IB', 'VE', 'RU', 'P', 'EB', 'RA', 'HU', 'PE', 'PO', 'HA', 'FE', 'FU', 'OV', 'IL', 'UT', 'OB', 'ON', 'E', 'LA', 'IV', 'Q', 'UD', 'LO', 'RI', 'FI', 'UQ', 'ES', 'KA', 'EJ', 'LI', 'SA', 'UZ', 'AP', 'OW', 'UP', 'AV', 'US', 'AB', 'AG', 'NO', 'OG', 'AW', 'QU', 'EX', 'KI', 'GI', 'VI', 'GA', 'F', 'MA', 'AF', 'UY', 'EK', 'AS', 'K', 'AJ', 'AK', 'AZ', 'FO', 'JU', 'MO', 'CA', 'OQ', 'AR', 'IS', 'PI', 'EM', 'C', 'IJ', 'HI', 'N', 'OF', 'UN', 'ET', 'UM', 'CU', '0', 'IG', 'OX', 'DA', 'AY', 'OM', 'OJ', 'BE', 'BO', 'CO', 'QO', 'IK', 'KU', 'UK', 'WA', 'TU', 'W', 'UB', 'S', 'IY', 'NU', 'PU', 'R', 'CI', 'BU', 'IX', 'ID', 'EL', 'BI', 'BA', 'EZ', 'EQ', 'GE', 'CE', 'AH', 'VO', 'EV', 'ED', 'EG', 'H', 'TA', 'OP', 'IC', 'U', 'OS', 'OL', 'AL' , 'OTHERS']
@@ -10,7 +11,7 @@ en_table = ['JA', 'IN', 'SU', 'UF', 'TE', 'EW', 'PA', 'AC', 'HE', 'HO', 'MU', 'J
 db_root = "BNC_SENT/"
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DB_DIR = os.path.join(BASE_DIR, "db")
+# DB_DIR = os.path.join(BASE_DIR, "db")
 
 # CREATE TABLE Invert_UkWac1 ( Word , SentNo , Posi );
 # CREATE INDEX Idx_Word on Invert_UkWac1(Word);

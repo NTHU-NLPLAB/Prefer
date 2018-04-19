@@ -16,9 +16,10 @@ import paraphrase.func_bnc as func_bnc
 import paraphrase.phraseTable as phraseTable
 from paraphrase.simple_tag import simple_pos_dic
 
+from .environment import DB_DIR
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DB_DIR = os.path.join(BASE_DIR, "db")
+# DB_DIR = os.path.join(BASE_DIR, "db")
 
 lmtzr = WordNetLemmatizer()
 

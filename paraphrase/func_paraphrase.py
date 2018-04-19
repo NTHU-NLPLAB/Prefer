@@ -11,9 +11,10 @@ from nltk.stem.wordnet import WordNetLemmatizer
 import paraphrase.phraseTable as phraseTable
 import paraphrase.func_bnc as func_bnc
 
+from .environment import DB_DIR
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DB_DIR = os.path.join(BASE_DIR, "db")
+# DB_DIR = os.path.join(BASE_DIR, "db")
 
 
 lmtzr = WordNetLemmatizer()

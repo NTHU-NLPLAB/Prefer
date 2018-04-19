@@ -3,8 +3,10 @@ import sqlite3
 import re
 import os
 
+from .environment import DB_DIR
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DB_DIR = os.path.join(BASE_DIR, "db")
+# DB_DIR = os.path.join(BASE_DIR, "db")
 
 pch = re.compile(u"^[\u4E00-\u9FA5 *,\d]+$")
 
