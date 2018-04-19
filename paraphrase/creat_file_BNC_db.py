@@ -18,46 +18,37 @@ c = 0
 db_root = "BNC_SENT/"
 
 
-level1=0
-level2=0
-level3=0
+level1 = 0
+level2 = 0
+level3 = 0
 
-def get_path( sn ):
-	level3=sn % 200
-	level2=(sn/200) % 200
-	level1=(sn/40000) % 200
-	return [ str(level1) , str(level2) , str(level3) ]
-	#return str(level1)+"/"+str(level2)+"/"+str(level3)
 
-def get_sn( path ):
-	level1, level2, level3 = path.split("/")
+def get_path(sn):
+    level3 = sn % 200
+    level2 = (sn/200) % 200
+    level1 = (sn/40000) % 200
+    return [str(level1), str(level2), str(level3)]
+    # return str(level1)+"/"+str(level2)+"/"+str(level3)
 
-	return int(level3) + int(level2)*200 + int(level1)*40000  
-	
+
+def get_sn(path):
+    level1, level2, level3 = path.split("/")
+    return int(level3) + int(level2)*200 + int(level1)*40000
 
 
 con.text_factory = str
+db_dir1 = os.listdir(db_root)
 
-db_dir1 = os.listdir( db_root )
-
-for Sn , Sent , POS , Shallow in cur.execute("SELECT Sn, Sent, POS_tag , Shallow FROM Sent"):
-	path = get_path(Sn)
-	
-	for i in range(len(path)-1):
-		#print path[:i]
-		if path[i] not in os.listdir( db_root + "/".join( path[:i] ) ):
-			#print db_root + "/".join( path[:i+1] ) 
-			os.mkdir( db_root + "/".join( path[:i+1] ) )
-	fout = file( db_root + "/".join(path)  , "w" )
-	
-	fout.write( Sent + "\n" + POS + "\n" + Shallow )
-	
-	fout.close()
-	c+=1
-	if c%50000==0:
-		print str(float(c)*100/lo)[:4] + "%"
-
-		
-	
-
-
+for Sn, Sent, POS, Shallow in cur.execute("SELECT Sn, Sent, POS_tag , Shallow FROM Sent"):
+    path = get_path(Sn)
+    for i in range(len(path)-1):
+        # print(path[:i])
+        if path[i] not in os.listdir(db_root + "/".join(path[:i])):
+            # print(db_root + "/".join( path[:i+1]))
+            os.mkdir(db_root + "/".join(path[:i+1]))
+    fout = open(db_root + "/".join(path), "w")
+    fout.write(Sent + "\n" + POS + "\n" + Shallow)
+    fout.close()
+    c += 1
+    if c % 50000 == 0:
+        print(str(float(c)*100/lo)[:4] + "%")

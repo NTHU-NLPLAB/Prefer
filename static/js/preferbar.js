@@ -124,7 +124,7 @@ $(document).ready(function() {
 	//login validate	
 	
 	$.ajax({
-	  url: "validate.html",
+	  url: "validate/",
 	  error: function(xhr){
 		  alert("您尚未登入!!");
 	  },
@@ -136,7 +136,7 @@ $(document).ready(function() {
 	
 	// for preview
 	$.ajax({
-          url: "preview.html",
+          url: "preview/",
           data: { 'qphrase': $('#qphrase').val() },
           error: function(xhr){
             	//alert("AJAX problem , please try again later!!");
@@ -149,7 +149,7 @@ $(document).ready(function() {
           complete: function(){
           		// after loading finished, display
 				$.ajax({
-					  url: "similar.html",
+					  url: "similar/",
 					  data: { 'qphrase': $('#qphrase').val() },
 					  error: function(xhr){
 						  //alert("AJAX problem , please try again later!!");
@@ -161,17 +161,14 @@ $(document).ready(function() {
           }
     });
 
-	
-	
-	
 	//tab js
 	$("#tab1_btn").click(function(){
 		//$('#tab_ctn_container').html('<p style="text-align:center; position:relative; top:200px;"><img src="images/wait.gif" /></p>');
 		var qp=$('#qphrase').val();
-		$('#tab_ctn_container').html('<p style="text-align:center; position:relative; top:200px;"><img src="images/wait.gif" /></p>');
+		$('#tab_ctn_container').html('<p style="text-align:center; position:relative; top:200px;"><img src="static/images/wait.gif" /></p>');
 		
 		$.ajax({
-          url: "similar.html",
+          url: "similar/",
           data: { 'qphrase': $('#qphrase').val() },
           error: function(xhr){
               alert("AJAX problem , please try again later!!");
@@ -185,7 +182,7 @@ $(document).ready(function() {
 		$(".tab_btn").animate({
 				opacity: 0.5,
 				borderWidth: 1
-		}, 600 );
+		}, 600);
 		$(this).animate({
 				opacity: 1.0,
 				borderWidth: 3
@@ -198,13 +195,10 @@ $(document).ready(function() {
 				
      });
 	$("#tab2_btn").click(function(){
-		$('#tab_ctn_container').html('<p style="text-align:center; position:relative; top:200px;"><img src="images/wait.gif" /></p>');
-		//var qp=$('#qphrase').val();
-		//$('#tab_ctn_container').html('preview.html?qphrase='+qp);
-		
+		$('#tab_ctn_container').html('<p style="text-align:center; position:relative; top:200px;"><img src="static/images/wait.gif" /></p>');
       	
 		$.ajax({
-          url: "extended.html",
+          url: "extended/",
           data: { 'qphrase': $('#qphrase').val() },
           error: function(xhr){
               alert("AJAX problem , please try again later!!");
@@ -230,10 +224,9 @@ $(document).ready(function() {
 		$("#tab2_ctn").fadeIn(1000);             
      });
 	$("#tab3_btn").click(function(){
-		
-		$('#tab_ctn_container').html('<p style="text-align:center; position:relative; top:200px;"><img src="images/wait.gif" /></p>');
+		$('#tab_ctn_container').html('<p style="text-align:center; position:relative; top:200px;"><img src="static/images/wait.gif" /></p>');
 		$.ajax({
-          url: "pattern.html",
+          url: "pattern/",
           data: { 'qphrase': $('#qphrase').val() },
           error: function(xhr){
               alert("AJAX problem , please try again later!!");
@@ -267,7 +260,7 @@ $(document).ready(function() {
 	var name = $( "#name" ),
 		password = $( "#password" );
 	
-	$( "#dialog-form" ).dialog({
+	$("#dialog-form").dialog({
 		autoOpen: false,
 		height: 230,
 		width: 380,
@@ -275,7 +268,7 @@ $(document).ready(function() {
 		buttons: {
 			"Login": function() {
 				$.ajax({
-				  url: "login.html",
+				  url: "login/",
 				  data: { 'name': $('#name').val(), 'password': $('#password').val() },
 				  type:"POST",
 				  error: function(xhr){
@@ -292,13 +285,11 @@ $(document).ready(function() {
 			}
 		},
 		close: function() {
-			allFields.val( "" ).removeClass( "ui-state-error" );
+			allFields.val("").removeClass( "ui-state-error" );
 		}
 	});
-	$( "#login" ).click(function() {
-				$( "#dialog-form" ).dialog( "open" );
+	$("#login").click(function() {
+		$("#dialog-form").dialog("open");
 	});
 
-
-	
 });

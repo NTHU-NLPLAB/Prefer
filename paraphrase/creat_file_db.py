@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import sqlite3
@@ -16,43 +16,35 @@ lo = 17000000
 db_root = "SENTDB/"
 
 
-level1=0
-level2=0
-level3=0
+level1 = 0
+level2 = 0
+level3 = 0
 
-def get_path( sn ):
-	level3=sn % 300
-	level2=(sn/300) % 300
-	level1=(sn/90000) % 300
-	return [ str(level1) , str(level2) , str(level3) ]
-	#return str(level1)+"/"+str(level2)+"/"+str(level3)
 
-def get_sn( path ):
-	level1, level2, level3 = path.split("/")
+def get_path(sn):
+    level3 = sn % 300
+    level2 = (sn/300) % 300
+    level1 = (sn/90000) % 300
+    return [str(level1), str(level2), str(level3)]
+    # return str(level1)+"/"+str(level2)+"/"+str(level3)
 
-	return int(level3) + int(level2)*300 + int(level1)*90000  
-	
+
+def get_sn(path):
+    level1, level2, level3 = path.split("/")
+    return int(level3) + int(level2)*300 + int(level1)*90000
 
 
 con.text_factory = str
+db_dir1 = os.listdir(db_root)
 
-db_dir1 = os.listdir( db_root )
+for Sn, Sent, Lemma, POS in cur.execute("SELECT Sn, Sent, Lemma, POS FROM UkWac1"):
+    path = get_path(Sn)
 
-for Sn , Sent , Lemma , POS in cur.execute("SELECT Sn , Sent , Lemma , POS FROM UkWac1"):
-	path = get_path(Sn)
-	
-	for i in range(len(path)-1):
-		#print path[:i]
-		if path[i] not in os.listdir( db_root + "/".join( path[:i] ) ):
-			#print db_root + "/".join( path[:i+1] ) 
-			os.mkdir( db_root + "/".join( path[:i+1] ) )
-	fout = file( db_root + "/".join(path)  , "w" )
-	
-	fout.write( Sent + "\n" + Lemma + "\n" + POS )
-	
-	fout.close()
-		
-		
-	
-
-
+    for i in range(len(path)-1):
+        # print(path[:i])
+        if path[i] not in os.listdir(db_root + "/".join(path[:i])):
+            # print(db_root + "/".join( path[:i+1]))
+            os.mkdir(db_root + "/".join(path[:i+1]))
+    fout = open(db_root + "/".join(path), "w")
+    fout.write(Sent + "\n" + Lemma + "\n" + POS)
+    fout.close()

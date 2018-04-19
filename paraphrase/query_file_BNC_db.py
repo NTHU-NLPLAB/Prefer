@@ -1,9 +1,7 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import sqlite3
-import sys
-import os
 from datetime import datetime
 
 con = sqlite3.connect("UkWacInvertedTable.db")
@@ -15,34 +13,37 @@ con.text_factory = str
 
 db_root = "BNC_SENT/"
 
-def get_path( sn ):
-	level3=sn % 300
-	level2=(sn/300) % 300
-	level1=(sn/90000) % 300
-	return [ str(level1) , str(level2) , str(level3) ]
-	#return str(level1)+"/"+str(level2)+"/"+str(level3)
 
-def get_sn( path ):
-	level1, level2, level3 = path.split("/")
+def get_path(sn):
+    level3 = sn % 300
+    level2 = (sn/300) % 300
+    level1 = (sn/90000) % 300
+    return [str(level1), str(level2), str(level3)]
+    # return str(level1)+"/"+str(level2)+"/"+str(level3)
 
-	return int(level3) + int(level2)*300 + int(level1)*90000  
+
+def get_sn(path):
+    level1, level2, level3 = path.split("/")
+
+    return int(level3) + int(level2)*300 + int(level1)*90000
+
 
 tstart = datetime.now()
 
 inv_lst = set([])
-cnt_word_lst = [ "abandon" , "punishment"  ]
+cnt_word_lst = ["abandon", "punishment"]
 
 for word in cnt_word_lst:
-	cur.execute("SELECT SentIndex FROM Invert_UkWac1 WHERE Word=?", ( word , ) )
-	results =  [ l[0] for l in eval(cur.fetchall()[0][0]) ]
-	#print results
+    cur.execute("SELECT SentIndex FROM Invert_UkWac1 WHERE Word=?", (word,))
+    results = [l[0] for l in eval(cur.fetchall()[0][0])]
+    # print(results)
 
-	if not inv_lst:
-		inv_lst = set( results )
-	else:
-		inv_lst = inv_lst.intersection( set(results) ) 
+    if not inv_lst:
+        inv_lst = set(results)
+    else:
+        inv_lst = inv_lst.intersection(set(results))
 
-#print len(inv_lst)
+# print(len(inv_lst))
 inv_lst = list(inv_lst)
 inv_lst.sort()
 
@@ -50,17 +51,11 @@ inv_lst.sort()
 sent_lst = []
 
 for sn in inv_lst:
-	path = get_path( sn )
-	sent_lst.append(  [ line.strip() for line in file( db_root + "/".join( path )  , "rU") ]   )
+    path = get_path(sn)
+    sent_lst.append([line.strip() for line in open(db_root + "/".join(path), "rU")])
 
-print sent_lst
-print len(sent_lst)
+print(sent_lst)
+print(len(sent_lst))
 tend = datetime.now()
 
-print "Finish index in " + str( (tend-tstart).seconds )
-
-		
-		
-	
-
-
+print("Finish index in " + str((tend-tstart).seconds))
