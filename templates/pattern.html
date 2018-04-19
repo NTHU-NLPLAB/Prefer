@@ -1,9 +1,8 @@
 
 	{% autoescape off %}
-	
-		<div id="tab1_ctn" class="tab_ctn">
+		<div id="tab3_ctn"  class="tab_ctn">
 			<div class="sidebar">
-				<div style="" id="top_bar"> 
+			<div id="top_bar"> 
 				{% if msg %}
 					<b style="color:#333">{{ msg }}</b>
 				{% else %}
@@ -11,49 +10,42 @@
 				{% endif %}
 				</div>
 				<ul class="menu">
-					{% for phrase, ch_ph , score, ex_lst in results_lst %}
-						<li><a href="#" value="sim_ex_{{ forloop.counter }}">{{ phrase }} {{ ch_ph }} <span> / {{ score }}</span></a></li>
+					{% for pat, detail_lst in pattern_lst %}
+						<li><a href="#" value="pat_ex_{{ forloop.counter }}">  <b style="font-size:large">  {{ pat.0 }} </b>  -------- PHRASE --------<b style="font-size:large"> {{ pat.1 }}  </b>  </a></li>
 					{% endfor %}
 				</ul>
 			</div>
-			<div id="example_sent" class="exsent_container">
-				{% for phrase, ch_ph , score, ex_lst in results_lst %}
-				<div class="exsent" id="sim_ex_{{ forloop.counter }}">
-					{% for ex, ex_sent, ex_ch, pat_lst  in ex_lst %}
-					<h3>{{ ex }} {{ ex_ch }}</h3>
-					
-					<p>{{ ex_sent }}</p>
+			<div id="example_sent3" class="exsent_container">
+				{% for pat, detail_lst in pattern_lst %}
+				<div class="exsent" id="pat_ex_{{ forloop.counter }}">
+	
 					<ul class="exaccord noaccordion">
-						{% for pat, pat_items in pat_lst %}
-							{% if forloop.counter < 10 %}
-								<li> <a><span class="wordlist" title="例字" href="wordlist.html?qword={{ pat.1 }}" rel="wordlist.html?qword={{ pat.1 }}" > {{ pat.0 }} </span> {{ pat.2 }} <span class="wordlist" title="例句" href="wordlist.html?qword={{ pat.4 }}" rel="wordlist.html?qword={{ pat.4 }}" > {{ pat.3 }} </span><span class="pat_freq">/ {{ pat_items.0 }} </span></a>
-									<ul class="acitem">
-										{% for pat_ex in pat_items.3 %}
-											{% if forloop.counter < 10 %}
-												<li><a class="expl_sent" title="例句" href="example.html?qp={{ pat_ex }}" rel="example.html?qp={{ pat_ex }}" > {{ pat_ex }} <span class="translate" title="翻譯" href="translate.html?qp={{ pat_ex }}" rel="translate.html?qp={{ pat_ex }}" > 翻譯 </span></a></li>
-											{% endif %}
-										{% endfor %}
-									</ul>
-								</li>
-							{% endif %}
-						{% endfor %}
+					{% for score, ex, pos_lst in detail_lst %}	
+						<li> <a href="#"> {{ ex }} </a> 
+							<ul class="acitem">
+								{% for  hword , ex_phrase , tword in pos_lst %}
+								<li><a href="#"> {{ hword }} <b>{{ ex_phrase }}</b> {{ tword }} </a></li>
+								{% endfor %}
+							</ul>
+						</li>
+					{% endfor %}	
 					</ul>
-					{% endfor %}
+					
 					
 				</div>
 				{% endfor %}
 				
 			</div>
 		</div>
-		
-		
 
 
 
 <script>
 $(document).ready(function() {	
-	
+
+
 	$('.exaccord').initMenu();
+	
 
 	//Background color, mouseover and mouseout
 	var colorOver = '#31b8da';
@@ -115,7 +107,7 @@ $(document).ready(function() {
             open:       'fadeIn', // can be 'show' or 'slideDown' or 'fadeIn'
         	openSpeed:  '300'
     	},
-		//tracking: true,
+		tracking: true,
 
 	});
 
@@ -132,7 +124,7 @@ $(document).ready(function() {
             open:       'fadeIn', // can be 'show' or 'slideDown' or 'fadeIn'
         	openSpeed:  '300'
     	},
-    	//tracking: true,
+    	tracking: true,
 
 	});
 	
@@ -148,12 +140,9 @@ $(document).ready(function() {
             open:       'fadeIn', // can be 'show' or 'slideDown' or 'fadeIn'
         	openSpeed:  '300'
     	},
-    	//tracking: true,
+    	tracking: true,
 
 	});
 });
 </script>
-
-
 {% endautoescape %}
-

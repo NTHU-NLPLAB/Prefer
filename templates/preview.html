@@ -1,3 +1,4 @@
+{% load static %}
 {% autoescape off %}
 <style>
 
@@ -30,7 +31,7 @@ color:#666;
 
 </style>
 <div id="preview">
-<p><img src="images/wait.gif" />
+<p><img src="{% static 'images/wait.gif' %}" />
 {{ msg }}</p>
 <ul style="list-style-type: none;">
 {% for ph,sc,trans in paraphrase_lst %}
